@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Raquel Moss"]
   spec.email         = ["raquelxmoss@gmail.com"]
 
-  spec.summary       = "stuff"
-  spec.description   = "things"
-  spec.homepage      = "http://wherever.com"
+  spec.summary       = "Calculate fairer prices for your products"
+  spec.description   = ""
+  spec.homepage      = "https://github.com/raquelxmoss/purchasing_power_parity_gem"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
