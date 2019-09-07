@@ -22,7 +22,7 @@ module Ppp
       metadata = fetch_country_metadata(country)
       exchange_rate = exchange_rates[metadata[:currencies][0]["code"]]
       ppp = fetch_ppp(metadata[:country_code_iso_alpha_3])
-      calculate_ppp_conversion_factor(exchange_rate, ppp)
+      calculate_ppp_conversion_factor(ppp, exchange_rate)
     end
 
     def fetch_country_metadata(country_code)
@@ -30,7 +30,8 @@ module Ppp
       metadata = JSON.parse(response.body)
 
       { currencies: metadata["currencies"], country_code_iso_alpha_3: metadata["alpha3Code"] }
-    # rescue => e
+    rescue => error
+      # todo
     end
 
     def exchange_rates
@@ -40,13 +41,15 @@ module Ppp
     def fetch_exchange_rates
       response = HTTParty.get("#{EXCHANGE_RATES_API}?app_id=#{Ppp.configuration.openexchangerates_api_key}")
       JSON.parse(response.body)["rates"]
-    # rescue => e
+    rescue => error
+      # todo
     end
 
     def fetch_ppp(country_code_iso_alpha_3)
       response = HTTParty.get(quandl_api_url(country_code_iso_alpha_3))
       JSON.parse(response.body)["dataset"]["data"][0][1]
-    # rescue => error
+    rescue => error
+      #todo
     end
 
     def calculate_ppp_conversion_factor(ppp, exchange_rate)
