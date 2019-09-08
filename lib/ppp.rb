@@ -1,6 +1,7 @@
 require "ppp/version"
 require "ppp/configuration"
 require "ppp/calculate_ppp"
+require "pry"
 
 module Ppp
   class MissingApiKey < StandardError; end
@@ -21,22 +22,23 @@ module Ppp
 
     {}.tap do |result|
       countries.each { |country| result[country] = calculator.call(country) }
-      write_to_file(result) if configuration.cache
+      write_to_file(result, calculator.fetched_at) if configuration.cache
     end
-  rescue PppError => error
-    log_error
+  rescue Ppp::PppError => error
+    log_error(error)
     raise error if configuration.raise_on_failure
   end
 
   def self.log_error(error)
+    File.open(configuration.logfile, "a", error.inspect)
   end
 
-  def self.write_to_file(ppp_conversion_factors)
-    # json = {
-    #   fetched_at: @now,
-    #   ppp_conversion_factors: ppp_conversion_factors
-    # }
+  def self.write_to_file(ppp_conversion_factors, fetched_at)
+    json = {
+      fetched_at: fetched_at,
+      ppp_conversion_factors: ppp_conversion_factors
+    }
 
-    # File.open("w", configuration.outfile, json)
+    File.open(configuration.outfile, "w", json)
   end
 end

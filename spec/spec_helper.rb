@@ -11,4 +11,11 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.before do
+    Ppp.configure do |ppp_config|
+      ppp_config.quandl_api_key = "quandl_api_key"
+      ppp_config.openexchangerates_api_key = "openexchangerates_api_key"
+    end
+  end
 end

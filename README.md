@@ -5,6 +5,12 @@
 - FAQ
 - Contributing
 
+## TODO
+- make sure file-writing and logging happens in the right place
+- raise on failure
+- test calculator
+- railtie
+
 ## What is Purchasing Power Parity (PPP)
 
 If you're selling a digital product\* to a global audience, you are missing out on customers because their purchasing power doesn't go as far as yours.
